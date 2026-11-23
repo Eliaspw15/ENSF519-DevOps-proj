@@ -33,7 +33,7 @@ product = driver.find_element(
 print("3. Clicking Wireless Headphones...")
 
 product.click()
-
+#test
 time.sleep(2)
 
 print("4. Adding Wireless Headphones to cart...")
