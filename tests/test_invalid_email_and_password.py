@@ -1,8 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+import os
 from selenium.webdriver.chrome.options import Options
 options = Options()
+options.add_argument("--headless=new")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--window-size=1920,1080")
+driver = webdriver.Chrome(options=options)
 driver = webdriver.Chrome(options=options)
 
 
@@ -21,7 +27,7 @@ TEST_PASSWORD = "Test1234!"
 
 
 print("1. Opening website...")
-driver.get("TEST_URL", "http://127.0.0.1:4173")
+driver.get(os.getenv("TEST_URL", "http://127.0.0.1:4173"))
 time.sleep(2)
 
 
