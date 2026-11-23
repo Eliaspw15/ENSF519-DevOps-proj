@@ -39,7 +39,7 @@ pipeline {
                     curl -f http://127.0.0.1:4173/
 
                     TEST_URL=http://127.0.0.1:4173 \
-                        .venv/bin/python tests/test_website.py
+                        .venv/bin/python tests/test_website_jenkins.py
                 '''
             }
         }
