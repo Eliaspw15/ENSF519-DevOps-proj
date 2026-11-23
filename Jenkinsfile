@@ -8,11 +8,12 @@ pipeline {
                 sh 'npm run build'
             }
         }
-            post {
-                success {
-                    build job: 'Docker-deployment',
-                            wait: true
-                    }
+
+    }
+     post {
+        success {
+            build job: 'Docker-deployment',
+                    wait: true
             }
     }
 }
