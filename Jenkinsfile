@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Build Application') {
             steps {
@@ -12,6 +11,7 @@ pipeline {
             options {
                 timeout(time: 5, unit: 'MINUTES')
             }
+
             steps {
                 sh '''
                     set -e
@@ -40,22 +40,6 @@ pipeline {
 
                     TEST_URL=http://127.0.0.1:4173 \
                         .venv/bin/python tests/test_website.py
-                '''
-            }
-        }
-        stage('Selenium Tests') {
-            steps {
-                sh '''
-                    python3 -m venv .venv
-                    .venv/bin/pip install selenium
-
-                    npm run preview -- --host 127.0.0.1 &
-                    SERVER_PID=$!
-
-                    trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
-
-                    sleep 5
-                    .venv/bin/python tests/test_website_jenkins.py
                 '''
             }
         }
