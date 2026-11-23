@@ -20,7 +20,7 @@ pipeline {
 
                     # Create Python environment
                     python3 -m venv .venv
-                    .venv/bin/python -m pip install selenium pytest
+                    .venv/bin/python -m pip install selenium 
 
                     # Serve the production build
                     python3 -m http.server 4173 \
@@ -43,17 +43,16 @@ pipeline {
                     curl -fsS http://127.0.0.1:4173/ >/dev/null
 
                     # Run all tests and generate JUnit report
-                    TEST_URL=http://127.0.0.1:4173 \
-                        .venv/bin/python -m pytest tests/ -v \
-                        --junitxml=test-results.xml
-                '''
-            }
+                    export TEST_URL=http://127.0.0.1:4173
 
-            post {
-                always {
-                    junit testResults: 'test-results.xml',
-                          allowEmptyResults: true
-                }
+                    for file in tests/test_*.py; do
+                        echo "================================="
+                        echo "Running $file"
+                        echo "================================="
+
+                        .venv/bin/python -u "$file" || exit 1
+                    done
+                '''
             }
         }
     }
