@@ -41,12 +41,13 @@ pipeline {
                 }
             }
         }
+        }
         post {
             success {
                 build job: 'Terraform-deployment',
                     wait: false
                     
             }
-        }
+
     }
 }
