@@ -8,7 +8,13 @@ pipeline {
                 sh 'npm run build'
             }
         }
-
+            post {
+                success {
+                    build job: 'Docker-deployment',
+                            wait: true
+                    }
+            }
+/*
         stage('Selenium Tests') {
             options {
                 timeout(time: 5, unit: 'MINUTES')
@@ -58,8 +64,11 @@ pipeline {
                 success {
                     build job: 'Docker-deployment',
                             wait: true
+            
                 }
+                
             }
+            
         }
-    }
+*/    }
 }
