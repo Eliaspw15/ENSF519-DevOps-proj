@@ -4,7 +4,9 @@ import time
 
 
 # Open Chrome
-driver = webdriver.Chrome()
+from selenium.webdriver.chrome.options import Options
+options = Options()
+driver = webdriver.Chrome(options=options)
 
 print("1. Opening online shop...")
 

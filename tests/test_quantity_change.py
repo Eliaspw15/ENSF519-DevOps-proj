@@ -1,10 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-
-
-driver = webdriver.Chrome()
-
+from selenium.webdriver.chrome.options import Options
+options = Options()
+driver = webdriver.Chrome(options=options)
 print("1. Opening online shop...")
 driver.get("TEST_URL", "http://127.0.0.1:4173")
 time.sleep(2)

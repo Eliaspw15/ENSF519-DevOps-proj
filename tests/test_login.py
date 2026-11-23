@@ -1,8 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-
-
+from selenium.webdriver.chrome.options import Options
+options = Options()
+driver = webdriver.Chrome(options=options)
 # -----------------------------------
 # TEST DATA
 # -----------------------------------
@@ -15,8 +16,6 @@ TEST_PASSWORD = "Test1234!"
 # -----------------------------------
 # OPEN THE WEBSITE
 # -----------------------------------
-
-driver = webdriver.Chrome()
 
 print("1. Opening website...")
 driver.get("TEST_URL", "http://127.0.0.1:4173")

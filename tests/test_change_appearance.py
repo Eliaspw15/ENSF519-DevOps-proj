@@ -3,7 +3,9 @@ from selenium.webdriver.common.by import By
 import time
 
 
-driver = webdriver.Chrome()
+from selenium.webdriver.chrome.options import Options
+options = Options()
+driver = webdriver.Chrome(options=options)
 
 try:
     print("1. Opening online shop")

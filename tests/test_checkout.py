@@ -4,16 +4,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
 
+from selenium.webdriver.chrome.options import Options
+options = Options()
+driver = webdriver.Chrome(options=options)
 
 TEST_NAME = "Selenium Checkout User"
 TEST_EMAIL = "checkout@test.com"
 TEST_PASSWORD = "Test1234!"
 
-driver = webdriver.Chrome()
 
 
 print("1. Opening online shop...")
-driver.get("http://localhost:5173/")
+driver.get("TEST_URL", "http://127.0.0.1:4173")
 time.sleep(2)
 
 
