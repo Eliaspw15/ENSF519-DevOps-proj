@@ -14,6 +14,8 @@ pipeline {
                             wait: true
                     }
             }
+    }
+}
 /*
         stage('Selenium Tests') {
             options {
@@ -70,5 +72,7 @@ pipeline {
             }
             
         }
-*/    }
+    }
 }
+*/   
+
