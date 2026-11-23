@@ -19,7 +19,7 @@ TEST_PASSWORD = "Test1234!"
 driver = webdriver.Chrome()
 
 print("1. Opening website...")
-driver.get("http://localhost:5173/")
+driver.get("TEST_URL", "http://127.0.0.1:4173")
 time.sleep(2)
 
 

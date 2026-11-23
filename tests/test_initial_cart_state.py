@@ -8,7 +8,7 @@ driver = webdriver.Chrome()
 
 print("1. Opening online shop...")
 
-driver.get("http://localhost:5173/")
+driver.get("TEST_URL", "http://127.0.0.1:4173")
 
 time.sleep(2)
 
@@ -17,7 +17,7 @@ cart_link = driver.find_element(
 )
 
 cart_link.click()
-
+print("2. Going to Cart page")
 time.sleep(5)
 
 

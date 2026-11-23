@@ -7,7 +7,7 @@ driver = webdriver.Chrome()
 
 try:
     print("1. Opening online shop")
-    driver.get("http://localhost:5173/")
+    driver.get("TEST_URL", "http://127.0.0.1:4173")
     time.sleep(2)
 
     assert driver.find_element(By.TAG_NAME, "html").get_attribute("data-theme") == "light"
@@ -44,7 +44,10 @@ try:
     driver.refresh()
     time.sleep(2)
     
-    assert driver.find_element(By.TAG_NAME, "html").get_attribute("data-theme") == "light"
+    assert driver.find_element(By.TAG_NAME, "html").get_attribute("data-theme") == "dark"
+    print("TEST PASSED: Dark mode remained selected after refreshing.")
+
+    print("ALL TESTS PASSED!")
 except Exception as error:
     print(f"TEST FAILED: {type(error).__name__}: {error}")
     raise

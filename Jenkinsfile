@@ -11,13 +11,13 @@ pipeline {
             options {
                 timeout(time: 5, unit: 'MINUTES')
             }
-
             steps {
                 sh '''
                     set -e
 
                     python3 -m venv .venv
                     .venv/bin/pip install selenium
+                    .venv/bin/pip install pytest
 
                     # Serve the production build
                     python3 -m http.server 4173 \
@@ -39,8 +39,16 @@ pipeline {
                     curl -f http://127.0.0.1:4173/
 
                     TEST_URL=http://127.0.0.1:4173 \
-                        .venv/bin/python tests/test_website_jenkins.py
+                        .venv/bin/python -m pytest tests/ -v
+                    
+                    .venv/bin/python -m pytest tests/ -v --junitxml=test-results.xml
                 '''
+            }
+        }
+        post {
+            always {
+                junit testResults: 'test-results.xml',
+                    allowEmptyResults: true
             }
         }
     }
