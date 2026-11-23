@@ -21,7 +21,7 @@ pipeline {
                     trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
 
                     sleep 5
-                    .venv/bin/python tests/test_website.py
+                    .venv/bin/python tests/test_website_jenkins.py
                 '''
             }
         }
