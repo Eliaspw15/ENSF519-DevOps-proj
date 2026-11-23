@@ -56,7 +56,7 @@ pipeline {
             }
             post {
                 success {
-                    build job: 'Docker-Deployment',
+                    build job: 'Docker-deployment',
                             wait: true
                 }
             }
