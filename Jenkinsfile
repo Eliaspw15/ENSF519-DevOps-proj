@@ -54,6 +54,12 @@ pipeline {
                     done
                 '''
             }
+            post {
+                success {
+                    build job: 'Docker-Deployment',
+                            wait: true
+                }
+            }
         }
     }
 }

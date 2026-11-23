@@ -1,0 +1,19 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Verify Downstream Pipeline') {
+            steps {
+                echo 'Build and Selenium tests passed!'
+                echo 'Starting deployment pipeline...'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                echo 'Docker image build will go here.'
+            }
+        }
+    }
+}
