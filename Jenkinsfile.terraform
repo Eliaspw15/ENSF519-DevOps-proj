@@ -1,6 +1,13 @@
 
 pipeline {
     agent any
+    parameters {
+        string(
+            name: 'IMAGE_TAG',
+            defaultValue: '',
+            description: 'Docker image version to deploy'
+        )
+    }
 
     stages {
         stage('Terraform Init') {
@@ -43,4 +50,16 @@ pipeline {
             }
         }
     }
+    post {
+    success {
+        build job: 'Ansible-deployment',
+              wait: false,
+              parameters: [
+                  string(
+                      name: 'IMAGE_TAG',
+                      value: "${env.BUILD_NUMBER}"
+                  )
+              ]
+    }
+}
 }

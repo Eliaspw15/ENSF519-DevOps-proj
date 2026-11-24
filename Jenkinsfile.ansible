@@ -1,0 +1,41 @@
+
+pipeline {
+    agent any
+
+    parameters {
+        string(
+            name: 'IMAGE_TAG',
+            defaultValue: '',
+            description: 'Docker image version to deploy'
+        )
+    }
+
+    environment {
+        ANSIBLE_MASTER_IP = '172.31.25.94'
+    }
+
+    stages {
+        stage('Ansible Configuration & Deployment') {
+            steps {
+                sh '''
+                    set -eu
+
+                    # Only accept numeric Docker build tags
+                    case "$IMAGE_TAG" in
+                        ''|*[!0-9]*)
+                            echo "Invalid Docker image tag"
+                            exit 1
+                            ;;
+                    esac
+
+                    echo "Connecting to Ansible Master..."
+
+                    ssh -o BatchMode=yes \
+                        -i /var/lib/jenkins/.ssh/ansible_master_key \
+                        ubuntu@$ANSIBLE_MASTER_IP \
+                        "ansible-playbook /home/ubuntu/install-docker.yml -e image_tag=$IMAGE_TAG"
+                '''
+            }
+        }
+    }
+}
