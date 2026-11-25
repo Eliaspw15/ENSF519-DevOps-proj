@@ -53,13 +53,13 @@ pipeline {
     post {
     success {
         build job: 'Ansible-deployment',
-              wait: false,
-              parameters: [
-                  string(
-                      name: 'IMAGE_TAG',
-                      value: "${env.BUILD_NUMBER}"
-                  )
-              ]
+            wait: false,
+            parameters: [
+                string(
+                    name: 'IMAGE_TAG',
+                    value: "${params.IMAGE_TAG}"
+                    )
+                ]
     }
 }
 }
