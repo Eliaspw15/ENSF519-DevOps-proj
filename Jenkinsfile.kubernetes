@@ -1,0 +1,53 @@
+
+pipeline {
+    agent any
+
+    parameters {
+        string(
+            name: 'IMAGE_TAG',
+            defaultValue: '',
+            description: 'Docker image version to deploy'
+        )
+    }
+
+    environment {
+        KUBERNETES_IP = '172.31.29.233'
+    }
+
+    stages {
+        stage('Kubernetes Deployment') {
+            steps {
+                sh '''
+                    set -eu
+
+                    case "$IMAGE_TAG" in
+                        ''|*[!0-9]*)
+                            echo "Invalid IMAGE_TAG"
+                            exit 1
+                            ;;
+                    esac
+
+                    echo "Deploying image version $IMAGE_TAG"
+
+                    ssh -o BatchMode=yes \
+                        -o ConnectTimeout=15 \
+                        -i /var/lib/jenkins/.ssh/kubernetes_key \
+                        ubuntu@$KUBERNETES_IP \
+                        "sudo -n kubectl set image deployment/ensf519-shop ensf519-react-shop=eliaspw14/ensf519-react-shop:$IMAGE_TAG && sudo -n kubectl rollout status deployment/ensf519-shop --timeout=180s"
+                '''
+            }
+        }
+
+        stage('Verify Kubernetes') {
+            steps {
+                sh '''
+                    ssh -o BatchMode=yes \
+                        -o ConnectTimeout=15 \
+                        -i /var/lib/jenkins/.ssh/kubernetes_key \
+                        ubuntu@$KUBERNETES_IP \
+                        "sudo -n kubectl get deployments && sudo -n kubectl get pods && sudo -n kubectl get services"
+                '''
+            }
+        }
+    }
+}

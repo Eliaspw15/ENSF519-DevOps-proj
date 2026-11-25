@@ -38,4 +38,16 @@ pipeline {
             }
         }
     }
+    post {
+    success {
+        build job: 'Kubernetes-deployment',
+              wait: false,
+              parameters: [
+                  string(
+                      name: 'IMAGE_TAG',
+                      value: "${params.IMAGE_TAG}"
+                  )
+              ]
+    }
+}
 }
