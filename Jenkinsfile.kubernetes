@@ -15,6 +15,17 @@ pipeline {
     }
 
     stages {
+        stage('Validate Image Tag') {
+            steps {
+                script {
+                    echo "Received IMAGE_TAG: '${params.IMAGE_TAG}'"
+
+                    if (!(params.IMAGE_TAG ==~ /^[0-9]+$/)) {
+                        error("Missing or invalid IMAGE_TAG")
+                    }
+                }
+            }
+        }
         stage('Kubernetes Deployment') {
             steps {
                 sh '''
