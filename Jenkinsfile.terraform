@@ -52,6 +52,7 @@ pipeline {
     }
     post {
     success {
+        echo "Forwarding IMAGE_TAG: '${params.IMAGE_TAG}'"
         build job: 'Ansible-deployment',
             wait: false,
             parameters: [
