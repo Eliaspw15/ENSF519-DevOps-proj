@@ -41,7 +41,7 @@ pipeline {
     post {
     success {
         build job: 'Kubernetes-deployment',
-        echo "Forwarding IMAGE_TAG: '${params.IMAGE_TAG}'"
+        echo "Forwarding IMAGE_TAG: '${params.IMAGE_TAG}'",
               wait: false,
               parameters: [
                   string(
