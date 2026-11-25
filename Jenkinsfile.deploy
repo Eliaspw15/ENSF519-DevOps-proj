@@ -45,7 +45,13 @@ pipeline {
         post {
             success {
                 build job: 'Terraform-deployment',
-                    wait: false
+                    wait: false,
+                    parameters: [
+                  string(
+                      name: 'IMAGE_TAG',
+                      value: "${env.BUILD_NUMBER}"
+                  )
+              ]
                     
             }
 
