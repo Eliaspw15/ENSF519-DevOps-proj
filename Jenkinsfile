@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -9,15 +10,6 @@ pipeline {
             }
         }
 
-    }
-     post {
-        success {
-            build job: 'Docker-deployment',
-                    wait: true
-            }
-    }
-}
-/*
         stage('Selenium Tests') {
             options {
                 timeout(time: 5, unit: 'MINUTES')
@@ -29,7 +21,7 @@ pipeline {
 
                     # Create Python environment
                     python3 -m venv .venv
-                    .venv/bin/python -m pip install selenium 
+                    .venv/bin/python -m pip install selenium
 
                     # Serve the production build
                     python3 -m http.server 4173 \
@@ -51,7 +43,7 @@ pipeline {
                     # Verify website is responding
                     curl -fsS http://127.0.0.1:4173/ >/dev/null
 
-                    # Run all tests and generate JUnit report
+                    # Run Selenium tests
                     export TEST_URL=http://127.0.0.1:4173
 
                     for file in tests/test_*.py; do
@@ -63,17 +55,19 @@ pipeline {
                     done
                 '''
             }
-            post {
-                success {
-                    build job: 'Docker-deployment',
-                            wait: true
-            
-                }
-                
-            }
-            
+        }
+    }
+
+    post {
+        success {
+            echo "Build and Selenium tests passed."
+
+            build job: 'Docker-deployment',
+                  wait: false
+        }
+
+        failure {
+            echo "Build or Selenium tests failed. Docker deployment cancelled."
         }
     }
 }
-*/   
-
